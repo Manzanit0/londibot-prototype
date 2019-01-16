@@ -17,21 +17,27 @@
 
   (h/command-fn "start"
     (fn [{{id :id :as chat} :chat}]
-      (t/send-text token id "Welcome to londibot!")))
+      (t/send-text
+        token id
+        "Welcome to londibot! I am your humble TFL services servant :)")))
 
   (h/command-fn "help"
     (fn [{{id :id :as chat} :chat}]
-      (t/send-text token id "Help is on the way")))
+      (t/send-text
+        token id {:parse_mode "Markdown"}
+        "Right now the only available command is `/status`.")))
 
   (h/command-fn "status"
     (fn [{{id :id :as chat} :chat}]
-      (t/send-text 
-        token id {:parse_mode "Markdown"} 
+      (t/send-text
+        token id {:parse_mode "Markdown"}
         (msg/tube-status-message (tfl/tube-status)))))
 
   (h/message-fn
     (fn [{{id :id} :chat :as message}]
-      (t/send-text token id "I don't do a whole lot ... yet."))))
+      (t/send-text
+        token id {:parse_mode "Markdown"}
+        "To see what I can do for you, use the `/help` command."))))
 
 
 (defn -main
