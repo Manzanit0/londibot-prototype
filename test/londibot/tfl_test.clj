@@ -20,12 +20,12 @@
   </LineStatus>
 </ArrayOfLineStatus>")
 
-(deftest parse-xml-test
-  (testing "parses xml to a map"
-    (is (instance? clojure.lang.PersistentStructMap (parse-xml tfl-data)))))
-
 (def tfl-data-map
   (parse-xml tfl-data))
+
+(deftest parse-xml-test
+  (testing "parses xml to a map"
+    (is (instance? clojure.lang.PersistentStructMap tfl-data-map))))
 
 (def final-data-form
   (list {:line "Bakerloo" :status "Severe Delays"} {:line "Circle" :status "Good Service"}))
