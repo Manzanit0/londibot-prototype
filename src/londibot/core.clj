@@ -5,7 +5,8 @@
             [morse.handlers :as h]
             [morse.polling :as p]
             [morse.api :as t]
-            [londibot.messages :refer :all])
+            [londibot.tfl :as tfl]
+            [londibot.messages :as msg])
   (:gen-class))
 
 ; TODO: fill correct token
@@ -25,7 +26,8 @@
   (h/command-fn "status"
     (fn [{{id :id :as chat} :chat}]
       (t/send-text 
-        token id {:parse_mode "Markdown"} (tube-status-message))))
+        token id {:parse_mode "Markdown"} 
+        (msg/tube-status-message (tfl/tube-status)))))
 
   (h/message-fn
     (fn [{{id :id} :chat :as message}]
