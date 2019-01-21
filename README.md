@@ -7,6 +7,7 @@ Telegram bot which reports the status of London TFL services.
 First make sure you have leiningen installed, otherwise visit leiningen.org.
 
 ```
+export DATABASE_URL=jdbc:postgresql://localhost:5432/londibot
 export TELEGRAM_TOKEN=<your_token>
 lein run
 ```

@@ -1,7 +1,8 @@
 (ns londibot.database
+  (:require [environ.core :refer [env]])
   (:require [clojure.java.jdbc :as jdbc]))
 
-(def db {:connection-uri "jdbc:postgresql://localhost:5432/londibot"})
+ (def db {:connection-uri (env :database-url)})
 
 (defn fetch [id]
   (first (jdbc/query db ["SELECT * FROM jobs WHERE id = ?" id])))
@@ -14,3 +15,6 @@
 
 (defn delete [id]
   (first (jdbc/delete! db :jobs ["id =  ?" id])))
+
+(defn clean []
+  (jdbc/delete! db :jobs []))

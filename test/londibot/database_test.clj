@@ -27,12 +27,11 @@
       (let [id (:id existing-record)]
         (is (= 1 (db/delete id)))))))
 
-; TODO - Take the creation of records to the setup
 (defn setup []
-  (println "setup"))
+  (db/clean))
 
 (defn teardown []
-  (println "teardown"))
+  (db/clean))
 
 (defn once-fixture [f]
   (setup)
