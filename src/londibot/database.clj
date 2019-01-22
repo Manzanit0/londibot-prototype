@@ -2,7 +2,7 @@
   (:require [environ.core :refer [env]])
   (:require [clojure.java.jdbc :as jdbc]))
 
- (def db {:connection-uri (env :database-url)})
+ (def db {:connection-uri (env :database-uri)})
 
 (defn fetch [id]
   (first (jdbc/query db ["SELECT * FROM jobs WHERE id = ?" id])))

@@ -16,4 +16,10 @@
   :main ^:skip-aot londibot.core
   :target-path "target/%s"
 
-  :profiles {:uberjar {:aot :all}})
+  :profiles {:uberjar    {:aot :all}
+             :dev        {:env {:clj-env :development
+                                :database-uri "jdbc:postgresql://localhost:5432/londibot"}}
+             :test       {:env {:clj-env :test
+                                :database-uri "jdbc:postgresql://localhost:5432/londibot_test"}}
+             :production {:env {:clj-env :production
+                                :database-uri "jdbc:postgresql://localhost:5432/londibot"}}})
