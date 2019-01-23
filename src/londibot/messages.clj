@@ -9,4 +9,4 @@
     (string/join "\n" (map pretty-print-line-status lines-statuses))))
 
 (defn scheduled-notification-confirmation [expression]
-  (str "I have succesfully scheduled a notification for you under the cron: " expression))
+  (str "I have succesfully scheduled a notification for you under the cron: `" expression "`"))

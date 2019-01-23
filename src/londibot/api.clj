@@ -1,12 +1,14 @@
 (ns londibot.api
   (:require [immutant.scheduling :refer :all]
             [londibot.tfl :as tfl]
-            [londibot.messages :as msg]))
+            [londibot.messages :as msg]
+            [londibot.database :as db]))
 
 (defn status-notification [send-fn]
-  ; Sends a telegram message with the current status of the Tube.
   (apply send-fn [(msg/tube-status-message (tfl/tube-status))]))
 
 (defn scheduled-status-notification [expression send-fn]
-  ; Schedules a telegram message with the status of the Tube at that moment.
-  (schedule #(status-notification send-fn) (cron expression)))
+  (schedule #(status-notification send-fn) (cron expression))
+  ;(db/create job)) ; TODO persist the job.
+  (let [confirmation (msg/scheduled-notification-confirmation expression)]
+    (apply send-fn [confirmation])))
