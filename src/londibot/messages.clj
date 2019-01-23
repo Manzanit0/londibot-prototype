@@ -7,3 +7,6 @@
 (defn tube-status-message [lines-statuses]
   (str "The current status for London's tube is:\n\n"
     (string/join "\n" (map pretty-print-line-status lines-statuses))))
+
+(defn scheduled-notification-confirmation [expression]
+  (str "I have succesfully scheduled a notification for you under the cron: " expression))
