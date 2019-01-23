@@ -39,8 +39,9 @@
    "schedule"
    (fn
      [{{id :id} :chat, cron-expr :text}]
-     ; We want to trim the "/schedule" command from the string.
-     (bot/scheduled-status-notification (subs cron-expr 9) (fn [reply] (send-markdown-message id reply)))))
+     (let [job (bot/create-job id (subs cron-expr 9))] ; We want to trim the "/schedule" command from the string.
+       (bot/scheduled-status-notification job (fn [reply] (send-markdown-message id reply))))))
+
   (h/message-fn
    (fn
      [{{id :id} :chat}]
