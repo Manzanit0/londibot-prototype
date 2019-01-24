@@ -13,15 +13,12 @@
 (defn send-markdown-message [id msg]
   (t/send-text token id {:parse_mode "Markdown"} msg))
 
-(defn send-plain-message [id msg]
-  (t/send-text token id msg))
-
 (h/defhandler handler
   (h/command-fn
    "start"
    (fn
      [{{id :id, name :first_name} :chat}]
-     (send-plain-message id (str "Hi " name "! Welcome to londibot! I am your humble TFL services servant :)"))))
+     (send-markdown-message id (str "Hi " name "! Welcome to londibot! I am your humble TFL services servant :)"))))
 
   (h/command-fn
    "help"
