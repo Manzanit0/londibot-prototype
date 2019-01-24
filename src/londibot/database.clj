@@ -4,6 +4,9 @@
 
  (def db {:connection-uri (env :database-uri)})
 
+(defn all []
+  (jdbc/query db ["SELECT * FROM jobs"]))
+
 (defn fetch [id]
   (first (jdbc/query db ["SELECT * FROM jobs WHERE id = ?" id])))
 

@@ -33,14 +33,14 @@
    "status"
    (fn
      [{{id :id} :chat}]
-     (bot/status-notification (fn [text] (send-markdown-message id text)))))
+     (bot/send-status-notification (fn [text] (send-markdown-message id text)))))
 
   (h/command-fn
    "schedule"
    (fn
      [{{id :id} :chat, cron-expr :text}]
      (let [job (bot/create-job id (subs cron-expr 9))] ; We want to trim the "/schedule" command from the string.
-       (bot/scheduled-status-notification job (fn [reply] (send-markdown-message id reply))))))
+       (bot/create-scheduled-status-notification job (fn [reply] (send-markdown-message id reply))))))
 
   (h/message-fn
    (fn
@@ -55,4 +55,5 @@
     (System/exit 1))
 
   (println "Starting the londibot")
+  (bot/schedule-all-notifications send-markdown-message)
   (<!! (p/start token handler)))

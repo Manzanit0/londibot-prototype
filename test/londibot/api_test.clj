@@ -24,4 +24,4 @@
 (deftest test-status-notification
   (testing "sends a status report with latest tube information via the specified channel."
     (let [status-message "The current status for London's tube is:\n\n"]
-      (is (str/includes? (bot/status-notification send-fn) status-message)))))
+      (is (str/includes? (bot/send-status-notification send-fn) status-message)))))

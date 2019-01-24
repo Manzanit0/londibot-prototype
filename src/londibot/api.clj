@@ -13,11 +13,22 @@
 (defn get-user-id [job]
   (:userid job))
 
-(defn status-notification [send-fn]
+(defn send-status-notification [send-fn]
   (apply send-fn [(msg/tube-status-message (tfl/tube-status))]))
 
-(defn scheduled-status-notification [job send-fn]
+(defn send-schedule-confirmation [job send-fn]
   (let [expr (get-cron-expr job)]
-    (schedule #(status-notification send-fn) (cron expr))
-    (db/create job)
     (apply send-fn [(msg/scheduled-notification-confirmation expr)])))
+
+(defn schedule-job [job send-fn]
+  (schedule #(send-status-notification send-fn) (cron (get-cron-expr job))))
+
+(defn create-scheduled-status-notification [job send-fn]
+    (schedule-job job send-fn)
+    (db/create job)
+    (send-schedule-confirmation job send-fn))
+
+(defn schedule-all-notifications [send-fn]
+  ; N.B: Send-fn will not have closed within the userId!
+  (let [jobs (db/all)]
+    (doseq [j jobs] ((fn [job] (schedule-job job (fn [text] (send-fn (get-user-id job) text)))) j))))
