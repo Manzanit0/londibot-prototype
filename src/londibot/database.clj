@@ -2,7 +2,7 @@
   (:require [environ.core :refer [env]])
   (:require [clojure.java.jdbc :as jdbc]))
 
- (def db {:connection-uri (env :database-uri)})
+(def db {:connection-uri (env :database-uri)})
 
 (defn all []
   (jdbc/query db ["SELECT * FROM jobs"]))
@@ -21,3 +21,14 @@
 
 (defn clean []
   (jdbc/delete! db :jobs []))
+
+; Database model
+(defn new-job [userid cronexpression]
+  {:userid userid :cronexpression cronexpression})
+
+(defn get-cron-expr [job]
+  (:cronexpression job))
+
+(defn get-user-id [job]
+  (:userid job))
+
