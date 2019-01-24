@@ -4,6 +4,8 @@
             [londibot.messages :as msg]
             [londibot.database :as db]))
 
+(defn new-job [id expr] (db/new-job id expr))
+
 (defn send-status-notification [send-fn]
   (send-fn (msg/tube-status-message (tfl/tube-status))))
 
@@ -19,7 +21,11 @@
   (db/create job)
   (send-schedule-confirmation job send-fn))
 
-(defn schedule-all-notifications [send-fn]
-  ; N.B: send-fn will not have closed within the userId!
-  (let [jobs (db/all)]
-    (doseq [j jobs] ((fn [job] (schedule-job job (fn [text] (send-fn (db/get-user-id job) text)))) j))))
+(defn schedule-all-notifications
+  ([send-fn] ; Default the scheduling library method.
+   (schedule-all-notifications send-fn schedule-job))
+
+  ([send-fn schedule-fn]
+   (let [jobs (db/all)]
+     ; Use doall + map vs doseq because we need the return values in order to test the code.
+     (doall (map (fn [job] (schedule-fn job (fn [text] (send-fn (db/get-user-id job) text)))) jobs)))))
