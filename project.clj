@@ -6,8 +6,10 @@
 
   :dependencies [[org.clojure/clojure       "1.8.0"]
                  [environ                   "1.1.0"]
-                 [morse                     "0.2.4"]
+                 [morse                     "0.2.4"] ; Telegram API specific
                  [clj-http                  "3.9.1"]
+                 [compojure                 "1.6.1"]
+                 [ring/ring-jetty-adapter   "1.7.1"]
                  [org.immutant/scheduling   "2.1.10"]
                  [org.clojure/java.jdbc     "0.7.8"]
                  [org.postgresql/postgresql "9.4-1201-jdbc41"]]
