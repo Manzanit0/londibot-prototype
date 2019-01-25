@@ -1,4 +1,4 @@
-(ns londibot.messages
+(ns londibot.core.messages
   (:require [clojure.string :as string]))
 
 (defn pretty-print-line-status [line-status]

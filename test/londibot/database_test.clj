@@ -1,6 +1,6 @@
 (ns londibot.database-test
   (:require [clojure.test :refer :all]
-            [londibot.database :as db]))
+            [londibot.core.database :as db]))
 
 ;; Model tests
 

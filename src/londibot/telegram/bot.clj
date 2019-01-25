@@ -5,7 +5,7 @@
             [morse.handlers :as h]
             [morse.polling :as p]
             [morse.api :as t]
-            [londibot.api :as bot])
+            [londibot.core.api :as bot])
   (:gen-class))
 
 (def token (env :telegram-token))

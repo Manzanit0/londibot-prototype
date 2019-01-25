@@ -1,9 +1,9 @@
 (ns londibot.api-test
   (:require [clojure.test :refer :all]
             [clojure.string :as str]
-            [londibot.api :as bot]
-            [londibot.database :as db]
-            [londibot.messages :as msg]))
+            [londibot.core.api :as bot]
+            [londibot.core.database :as db]
+            [londibot.core.messages :as msg]))
 
 ; Stub send function.
 (defn send-fn

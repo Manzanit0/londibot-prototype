@@ -1,6 +1,6 @@
 (ns londibot.messages-test
   (:require [clojure.test :refer :all]
-            [londibot.messages :as msg]))
+            [londibot.core.messages :as msg]))
 
 (def line-status 
   (list {:line "Bakerloo" :status "Severe Delays"} {:line "Circle" :status "Good Service"}))

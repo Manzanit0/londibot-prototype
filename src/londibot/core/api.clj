@@ -1,8 +1,8 @@
-(ns londibot.api
+(ns londibot.core.api
   (:require [immutant.scheduling :refer :all]
-            [londibot.tfl :as tfl]
-            [londibot.messages :as msg]
-            [londibot.database :as db]))
+            [londibot.core.tfl :as tfl]
+            [londibot.core.messages :as msg]
+            [londibot.core.database :as db]))
 
 (defn new-job [id expr] (db/new-job id expr))
 

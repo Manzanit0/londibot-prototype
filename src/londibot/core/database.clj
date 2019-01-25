@@ -1,4 +1,4 @@
-(ns londibot.database
+(ns londibot.core.database
   (:require [environ.core :refer [env]])
   (:require [clojure.java.jdbc :as jdbc]))
 
