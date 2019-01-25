@@ -1,4 +1,4 @@
-(ns londibot.core
+(ns londibot.telegram.bot
   (:require [clojure.core.async :refer [<!!]]
             [clojure.string :as str]
             [environ.core :refer [env]]

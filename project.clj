@@ -14,8 +14,10 @@
 
   :plugins [[lein-environ "1.1.0"]]
 
-  :main ^:skip-aot londibot.core
+  :main nil
   :target-path "target/%s"
+  :aliases {"telegram"      ["run" "-m" "londibot.telegram.bot"]
+            "slack"         ["run" "-m" "londibot.slack.bot"]}
 
   :profiles {:uberjar    {:aot :all}
              :dev        {:env {:clj-env :development
