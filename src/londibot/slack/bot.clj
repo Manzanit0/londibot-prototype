@@ -4,46 +4,14 @@
             [ring.middleware.params :refer :all]
             [ring.logger :refer :all]
             [ring.server.standalone :refer :all]
-            [clojure.data.json :as json]
-            [clj-http.client :as http]
-            [environ.core :refer [env]]
             [londibot.slack.middleware :as mdw]
-            [londibot.core.api :as api]
-            [londibot.core.messages :refer :all]
-            [londibot.core.tfl :refer :all])
+            [londibot.slack.api-adapter :as api])
   (:gen-class))
 
-(def token (env :slack-token))
-
-(def slack-service-name "slack")
-
-(defn build-body [msg]
-  ; Generates responses visible to everyone in the channel by default.
-  {:text msg :response_type "in_channel"})
-
-(defn post-message [channel-id msg]
-  (http/post (str
-               "https://slack.com/api/chat.postMessage"
-               "?token=" token
-               "&channel=" channel-id
-               "&text=" msg)))
-
 (defroutes main-routes
-  (POST "/tube-status" []
-        (-> (tube-status-message (tube-status))
-            (build-body)
-            (json/write-str)))
-
-  (POST "/schedule" request
-        (let [channel-id (get (:params request) "channel_id")
-              cron-expr (get (:params request) "text")]
-          (let [job (api/new-job channel-id cron-expr slack-service-name)]
-            (api/create-scheduled-status-notification job (fn [msg] (post-message channel-id msg)))))
-        (-> "Job scheduled successfully"
-            (build-body)
-            (json/write-str)))
-
-  (route/not-found "Page not found"))
+  (POST "/tube-status" [] (api/get-status-notification))
+  (POST "/schedule" request (api/schedule-notification request))
+  (route/not-found "Endpoint not found"))
 
 (def app
   (-> main-routes
@@ -54,5 +22,5 @@
 
 (defn -main
   [& args]
-  (api/schedule-all-notifications slack-service-name post-message)
+  (api/schedule-all-notifications)
   (serve app {:port 5000 :open-browser? false}))
