@@ -15,6 +15,8 @@
 
 (def token (env :slack-token))
 
+(def slack-service-name "slack")
+
 (defn build-body [msg]
   ; Generates responses visible to everyone in the channel by default.
   {:text msg :response_type "in_channel"})
@@ -32,13 +34,10 @@
             (build-body)
             (json/write-str)))
 
-  ; FIXME - This will cause conflicts with Telegram UI.
-  ; The DB model needs an update to specify which UI has requested what.
-  ; Furthermore, the userId needs to be changed to varchar -> Slack uses strings.
   (POST "/schedule" request
         (let [channel-id (get (:params request) "channel_id")
               cron-expr (get (:params request) "text")]
-          (let [job (api/new-job channel-id cron-expr)]
+          (let [job (api/new-job channel-id cron-expr slack-service-name)]
             (api/create-scheduled-status-notification job (fn [msg] (post-message channel-id msg)))))
         (-> "Job scheduled successfully"
             (build-body)
@@ -55,4 +54,5 @@
 
 (defn -main
   [& args]
+  (api/schedule-all-notifications slack-service-name post-message)
   (serve app {:port 5000 :open-browser? false}))

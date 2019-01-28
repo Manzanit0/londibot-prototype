@@ -4,7 +4,7 @@
             [londibot.core.messages :as msg]
             [londibot.core.database :as db]))
 
-(defn new-job [id expr] (db/new-job id expr))
+(defn new-job [id expr service] (db/new-job id expr service))
 
 (defn send-status-notification [send-fn]
   (send-fn (msg/tube-status-message (tfl/tube-status))))
@@ -22,10 +22,11 @@
   (send-schedule-confirmation job send-fn))
 
 (defn schedule-all-notifications
-  ([send-fn] ; Default the scheduling library method.
-   (schedule-all-notifications send-fn schedule-job))
+  ([service send-fn] ; Default the scheduling library method.
+   (schedule-all-notifications service send-fn schedule-job))
 
-  ([send-fn schedule-fn]
-   (let [jobs (db/all)]
+  ([service send-fn schedule-fn]
+   (let [jobs (db/all service)]
+     (println (str "INFO: Number scheduled jobs – " (count jobs)))
      ; Use doall + map vs doseq because we need the return values in order to test the code.
      (doall (map (fn [job] (schedule-fn job (fn [text] (send-fn (db/get-user-id job) text)))) jobs)))))

@@ -4,8 +4,11 @@
 
 (def db {:connection-uri (env :database-uri)})
 
-(defn all []
-  (jdbc/query db ["SELECT * FROM jobs"]))
+(defn all
+  ([]
+   (jdbc/query db ["SELECT * FROM jobs"]))
+  ([service]
+   (jdbc/query db ["SELECT * FROM jobs WHERE service = ?" service])))
 
 (defn fetch [id]
   (first (jdbc/query db ["SELECT * FROM jobs WHERE id = ?" id])))
@@ -23,8 +26,15 @@
   (jdbc/delete! db :jobs []))
 
 ; Database model
-(defn new-job [userid cronexpression]
-  {:userid userid :cronexpression cronexpression})
+(defn new-job
+  ([userid cronexpression]
+   {:userid userid :cronexpression cronexpression})
+
+  ([userid cronexpression service]
+   {:userid userid :cronexpression cronexpression :service service}))
+
+(defn add-service [job service]
+  (assoc job :service service))
 
 (defn get-cron-expr [job]
   (:cronexpression job))
