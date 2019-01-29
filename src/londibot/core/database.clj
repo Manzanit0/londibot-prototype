@@ -26,15 +26,8 @@
   (jdbc/delete! db :jobs []))
 
 ; Database model
-(defn new-job
-  ([userid cronexpression]
-   {:userid userid :cronexpression cronexpression})
-
-  ([userid cronexpression service]
-   {:userid userid :cronexpression cronexpression :service service}))
-
-(defn add-service [job service]
-  (assoc job :service service))
+(defn new-job [userid cronexpression service]
+   {:userid userid :cronexpression cronexpression :service service})
 
 (defn get-cron-expr [job]
   (:cronexpression job))

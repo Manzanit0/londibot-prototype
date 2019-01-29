@@ -16,7 +16,7 @@
   (testing "prints the status of all the lines with Markdown"
     (is (= status-message (msg/tube-status-message line-status)))))
 
-(def confirmation-message "I have succesfully scheduled a notification for you under the cron: * * * * * *")
+(def confirmation-message "I have succesfully scheduled a notification for you under the cron: `* * * * * *`")
 
 (deftest print-scheduled-confirmation
   (testing "prints a confirmation message for scheduled jobs."
