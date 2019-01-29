@@ -1,11 +1,14 @@
-(ns londibot.database
+(ns londibot.core.database
   (:require [environ.core :refer [env]])
   (:require [clojure.java.jdbc :as jdbc]))
 
 (def db {:connection-uri (env :database-uri)})
 
-(defn all []
-  (jdbc/query db ["SELECT * FROM jobs"]))
+(defn all
+  ([]
+   (jdbc/query db ["SELECT * FROM jobs"]))
+  ([service]
+   (jdbc/query db ["SELECT * FROM jobs WHERE service = ?" service])))
 
 (defn fetch [id]
   (first (jdbc/query db ["SELECT * FROM jobs WHERE id = ?" id])))
@@ -23,8 +26,8 @@
   (jdbc/delete! db :jobs []))
 
 ; Database model
-(defn new-job [userid cronexpression]
-  {:userid userid :cronexpression cronexpression})
+(defn new-job [userid cronexpression service]
+   {:userid userid :cronexpression cronexpression :service service})
 
 (defn get-cron-expr [job]
   (:cronexpression job))

@@ -1,17 +1,22 @@
-(ns londibot.core
+(ns londibot.telegram.bot
   (:require [clojure.core.async :refer [<!!]]
             [clojure.string :as str]
             [environ.core :refer [env]]
             [morse.handlers :as h]
             [morse.polling :as p]
             [morse.api :as t]
-            [londibot.api :as bot])
+            [londibot.core.api :as bot])
   (:gen-class))
 
 (def token (env :telegram-token))
 
+(def telegram-service-name "telegram")
+
 (defn send-markdown-message [id msg]
   (t/send-text token id {:parse_mode "Markdown"} msg))
+
+(defn new-telegram-job [id cron-expr]
+  (bot/new-job id cron-expr telegram-service-name))
 
 (h/defhandler handler
   (h/command-fn
@@ -36,7 +41,7 @@
    "schedule"
    (fn
      [{{id :id} :chat, cron-expr :text}]
-     (let [job (bot/new-job id (subs cron-expr 9))] ; We want to trim the "/schedule" command from the string.
+     (let [job (new-telegram-job id (subs cron-expr 9))] ; We want to trim the "/schedule" command from the string.
        (bot/create-scheduled-status-notification job (fn [reply] (send-markdown-message id reply))))))
 
   (h/message-fn
@@ -52,5 +57,5 @@
     (System/exit 1))
 
   (println "Starting the londibot")
-  (bot/schedule-all-notifications send-markdown-message)
+  (bot/schedule-all-notifications telegram-service-name send-markdown-message)
   (<!! (p/start token handler)))

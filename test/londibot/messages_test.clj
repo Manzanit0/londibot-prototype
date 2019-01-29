@@ -1,6 +1,6 @@
 (ns londibot.messages-test
   (:require [clojure.test :refer :all]
-            [londibot.messages :as msg]))
+            [londibot.core.messages :as msg]))
 
 (def line-status 
   (list {:line "Bakerloo" :status "Severe Delays"} {:line "Circle" :status "Good Service"}))
@@ -16,7 +16,7 @@
   (testing "prints the status of all the lines with Markdown"
     (is (= status-message (msg/tube-status-message line-status)))))
 
-(def confirmation-message "I have succesfully scheduled a notification for you under the cron: * * * * * *")
+(def confirmation-message "I have succesfully scheduled a notification for you under the cron: `* * * * * *`")
 
 (deftest print-scheduled-confirmation
   (testing "prints a confirmation message for scheduled jobs."

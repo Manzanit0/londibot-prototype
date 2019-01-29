@@ -1,4 +1,4 @@
-(ns londibot.tfl
+(ns londibot.core.tfl
   (:require [clj-http.client :as client]
             [clojure.xml :as xml]
             [clojure.zip :as zip]))

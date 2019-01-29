@@ -1,6 +1,6 @@
 (ns londibot.tfl-test
   (:require [clojure.test :refer :all]
-            [londibot.tfl :refer :all]))
+            [londibot.core.tfl :refer :all]))
 
 (def tfl-data 
 "<ArrayOfLineStatus xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xmlns:xsd='http://www.w3.org/2001/XMLSchema' xmlns='http://webservices.lul.co.uk/'>
