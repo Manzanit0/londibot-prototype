@@ -1,6 +1,6 @@
 (ns londibot.tfl-test
   (:require [clojure.test :refer :all]
-            [londibot.core.tfl :refer :all]))
+            [londibot.core.tfl :as tfl]))
 
 (def tfl-data 
 "<ArrayOfLineStatus xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xmlns:xsd='http://www.w3.org/2001/XMLSchema' xmlns='http://webservices.lul.co.uk/'>
@@ -21,16 +21,18 @@
 </ArrayOfLineStatus>")
 
 (def tfl-data-map
-  (parse-xml tfl-data))
-
-(deftest parse-xml-test
-  (testing "parses xml to a map"
-    (is (instance? clojure.lang.PersistentStructMap tfl-data-map))))
+  (#'tfl/parse-xml tfl-data))
 
 (def final-data-form
   (list {:line "Bakerloo" :status "Severe Delays"} {:line "Circle" :status "Good Service"}))
 
 (deftest extract-data-test
   (testing "parses xml to a map"
-    (is (= final-data-form (extract-data tfl-data-map)))))
+    (is (= final-data-form (tfl/extract-data tfl-data-map)))))
 
+(deftest test-tfl-api-model
+  (testing "the model returned by the TFL API is valid and correctly parsed."
+    (let [data (tfl/tube-status)]
+      (is (= (count data) 15)) ; 11 tube lines + 4.
+      (is (every? #(contains? % :line) data))
+      (is (every? #(contains? % :status) data)))))
