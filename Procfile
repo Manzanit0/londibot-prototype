@@ -1,1 +1,1 @@
-web: lein run -m londibot.slack.bot
+web: lein with-profile production trampoline run -m londibot.slack.bot
