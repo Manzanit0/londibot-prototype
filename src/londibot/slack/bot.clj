@@ -6,13 +6,15 @@
             [ring.logger :refer :all]
             [ring.server.standalone :refer :all]
             [londibot.slack.middleware :as mdw]
-            [londibot.slack.api-adapter :as api])
+            [londibot.slack.api-adapter :as api]
+            [londibot.slack.oauth :as oauth])
   (:gen-class))
 
 (defroutes main-routes
   (POST "/tube-status" [] (api/get-status-notification))
   (POST "/schedule" request (api/schedule-notification request))
   (POST "/help"     request (api/help request))
+  (GET  "/oauth"    request (oauth/handle request))
   (route/not-found "Endpoint not found"))
 
 (def app
