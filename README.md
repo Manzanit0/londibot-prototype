@@ -74,6 +74,10 @@ In order to make this bot work it uses the current TFL Unified API. For more inf
 
 3. [Setting up testing fixtures](http://thornydev.blogspot.com/2012/09/before-and-after-logic-in-clojuretest.html)
 
+4. [Regexes in Clojure](https://lispcast.com/clojure-regex/)
+
+5. [The complete guide to Clojure destructuring](http://blog.brunobonacci.com/2014/11/16/clojure-complete-guide-to-destructuring)
+
 ## License
 
 Copyright © 2019 Manzanit0

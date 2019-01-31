@@ -5,6 +5,7 @@
             :url "http://www.eclipse.org/legal/epl-v10.html"}
 
   :dependencies [[org.clojure/clojure       "1.8.0"]
+                 [org.clojure/core.match    "0.3.0-alpha5"]
                  [environ                   "1.1.0"]
                  [morse                     "0.2.4"] ; Telegram API specific
                  [clj-http                  "3.9.1"]
