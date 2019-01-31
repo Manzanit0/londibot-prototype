@@ -29,9 +29,8 @@
 
   :profiles {:uberjar    {:aot :all}
              :dev        {:env {:clj-env :development
-                                :database-uri "jdbc:postgresql://localhost:5432/londibot"}}
+                                :database-url "jdbc:postgresql://localhost:5432/londibot"}}
              :test       {:env {:clj-env :test
-                                :database-uri "jdbc:postgresql://localhost:5432/londibot_test"}}
-             :production {:env {:clj-env :production
-                                :database-uri "jdbc:postgresql://localhost:5432/londibot"}}})
+                                :database-url "jdbc:postgresql://localhost:5432/londibot_test"}}
+             :production {:env {:clj-env :production}}}) ; Environment URL set in environment ;)
 
