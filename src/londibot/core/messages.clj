@@ -15,8 +15,8 @@
   (str "In order to schedule any notifications, "
        "make sure to use some of the following formats:"
        "\n\n - `Every MON at 08.00h`"
-       "\n\n - `Every MON,TUE,WED at 21.00h`"
-       "\n\n - `Every MON-FRI at 05:10PM`"
-       "\n\n - `Every THU at 07:00AM`"
+       "\n - `Every MON,TUE,WED at 21.00h`"
+       "\n - `Every MON-FRI at 05:10PM`"
+       "\n - `Every THU at 07:00AM`"
        "\n\n As you can see I understand both 12h and 24h formats, "
        "but I'm still learning how to express weekdays properly..."))
