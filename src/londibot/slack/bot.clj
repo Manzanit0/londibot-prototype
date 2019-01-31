@@ -1,6 +1,7 @@
 (ns londibot.slack.bot
   (:require [compojure.core :refer :all]
             [compojure.route :as route]
+            [clojure.string :as str]
             [ring.middleware.params :refer :all]
             [ring.logger :refer :all]
             [ring.server.standalone :refer :all]
@@ -22,5 +23,9 @@
 
 (defn -main
   [& args]
+  (when (str/blank? api/token)
+    (println "Please provide token in SLACK_TOKEN environment variable!")
+    (System/exit 1))
+
   (api/schedule-all-notifications)
   (serve app {:port 5000 :open-browser? false}))
