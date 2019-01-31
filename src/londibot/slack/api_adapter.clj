@@ -47,3 +47,10 @@
 
 (defn schedule-all-notifications []
   (api/schedule-all-notifications slack-service-name post-message))
+
+
+(defn help [request]
+  (-> request
+      (get-text)
+      (api/help)
+      (build-body)))

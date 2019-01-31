@@ -1,5 +1,6 @@
 (ns londibot.core.api
-  (:require [immutant.scheduling :refer :all]
+  (:require [clojure.core.match :refer [match]]
+            [immutant.scheduling :refer :all]
             [londibot.core.tfl :as tfl]
             [londibot.core.messages :as msg]
             [londibot.core.database :as db]
@@ -38,3 +39,8 @@
        (println (str "INFO: Number scheduled jobs – " (count jobs)))
        ; Use doall + map vs doseq because we need the return values in order to test the code.
        (doall (map (fn [job] (schedule-fn job (fn [text] (send-fn (db/get-user-id job) text)))) jobs))))))
+
+(defn help [topic]
+  (match topic
+        "schedule" (msg/schedule-help-message)
+        :else "Try with the topic `schedule`, for example :)"))
