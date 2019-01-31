@@ -1,2 +1,1 @@
-web: lein run  -m londibot.web
-
+web: lein run -m londibot.slack.bot

@@ -19,6 +19,7 @@
                  [org.clojure/java.jdbc     "0.7.8"]
                  [org.postgresql/postgresql "9.4-1201-jdbc41"]]
 
+  :min-lein-version "2.0.0"
   :plugins [[lein-environ "1.1.0"]]
 
   :main nil
