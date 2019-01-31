@@ -20,17 +20,17 @@
       (str)
       (prepend-zero)))
 
-(defn- build-cron [days hour minute]
-  (str "0 " minute " " hour " ? * " days))
+(defn- build-cron
+  ([match]
+   (let [[m days hour minutes modifier] match]
+     (build-cron days (to-24-format hour modifier) minutes)))
+  ([days hour minute]
+   (str "0 " minute " " hour " ? * " days)))
 
 (defn to-cron [expression]
   ; Captures expressions such as: Every MON-FRI at 18:00h and transforms them to a cron expression.
   ; Times can be in 12h and 24h format.
   ; Days must be in cron format (MON-FRI, TUE...)
-  (let [match (re-matches pattern expression)
-        days (nth match 1)
-        hour (nth match 2)
-        minutes (nth match 3)
-        hour-modifier (nth match 4)
-        hour-cr (to-24-format hour hour-modifier)]
-    (build-cron days hour-cr minutes)))
+  ; Upon unmatch (nil), returns the input expression.
+  (let [match (re-matches pattern expression)]
+    (if match (build-cron match) expression)))

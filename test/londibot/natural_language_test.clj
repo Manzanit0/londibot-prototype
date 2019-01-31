@@ -35,6 +35,9 @@
    (is (= "0 55 09 ? * *" (#'nl/build-cron "*" "09" "55")))))
 
 (deftest test-to-cron
+  (testing "if the input is unparseable (another cron?) it returs the input."
+    (is (= "* * * ? * *" (#'nl/to-cron "* * * ? * *")))
+    (is (= "0 00 21 ? * MON-FRI" (#'nl/to-cron "0 00 21 ? * MON-FRI"))))
   (testing "transforms natural language expressions to cron"
     (is (= "0 45 21 ? * MON-FRI" (#'nl/to-cron "Every MON-FRI at 09.45PM")))
     (is (= "0 45 09 ? * MON-FRI" (#'nl/to-cron "Every MON-FRI at 09.45AM")))

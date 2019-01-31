@@ -2,9 +2,12 @@
   (:require [immutant.scheduling :refer :all]
             [londibot.core.tfl :as tfl]
             [londibot.core.messages :as msg]
-            [londibot.core.database :as db]))
+            [londibot.core.database :as db]
+            [londibot.core.natural-language :as nl]))
 
-(defn new-job [id expr service] (db/new-job id expr service))
+(defn new-job [id expr service]
+  (let [cron (nl/to-cron expr)]
+    (db/new-job id cron service)))
 
 (defn get-status-notification []
   (msg/tube-status-message (tfl/tube-status)))
