@@ -2,7 +2,7 @@
   (:require [environ.core :refer [env]]
             [clojure.java.jdbc :as jdbc]))
 
-(def db {:connection-uri (env :database-url)})
+(def db (env :database-url))
 
 (defn all
   ([]
