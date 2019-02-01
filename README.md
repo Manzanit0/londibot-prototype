@@ -4,6 +4,10 @@ Telegram/Slack bot which reports the status of London TFL services.
 
 This project was started as an exercise to get in touch with Clojure and its ecosystem.
 
+## Live demo
+
+If you want to see how the bot works in Slack, simply add it to your workspace: [link](https://slack.com/oauth/authorize?client_id=2225972970.533137885794&scope=incoming-webhook,commands,bot,users:read,chat:write:bot,groups:read,channels:read,im:read,mpim:read,users:read.email,channels:write). A live version has been deployed to Heroku – be aware that it is using free dynos, so it make take time to awake it.
+
 ## Getting started
 
 _**Disclaimer:** Before continuing with the below instructions I assume you are aquainted with either the Slack API or the Telegram API in order to develop bots. If that is not the case, please make sure you are familiar with them._
