@@ -21,9 +21,7 @@
 (def app
   (-> main-routes
       (wrap-params) ; Slack sends channel data as url-endcoded-params.
-      (mdw/wrap-with-header "Content-Type" "application/json")
-      (mdw/print-response-stdout)
-      (wrap-with-logger)))
+      (mdw/wrap-with-header "Content-Type" "application/json")))
 
 (defn -main
   [& args]

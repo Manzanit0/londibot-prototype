@@ -34,11 +34,9 @@
    (schedule-all-notifications service send-fn schedule-job))
 
   ([service send-fn schedule-fn]
-   (future
-     (let [jobs (db/all service)]
-       (println (str "INFO: Number scheduled jobs – " (count jobs)))
-       ; Use doall + map vs doseq because we need the return values in order to test the code.
-       (doall (map (fn [job] (schedule-fn job (fn [text] (send-fn (db/get-user-id job) text)))) jobs))))))
+   (->> (db/all service)
+        (map (fn [job] (schedule-fn job (fn [text] (send-fn (db/get-user-id job) text)))))
+        (doall))))
 
 (defn help [topic]
   (match topic
