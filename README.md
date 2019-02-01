@@ -60,12 +60,6 @@ The other two sections of the repository are the platform-specific code for the 
 
 Its important to note that both bots work with the same database. That's why the `jobs` table has a `service` column. The column allows the applications to distinguish which scheduled jobs correspond to which users. Records will have the values of either `telegram` or `slack`. This allows them, in case the use both applications, to schedule different jobs from the different services.
 
-## Explanation
-
-As you can see in the code, this repository has 3 main sections: the first one is the core functionality to interact with the TFL API. It is a set of Clojure functions which retrieve, parse and expose the status of the tube in London.
-
-Furthermore, the other two sections are the platform-specific code for the bots; Telegram and Slack. In both of them a ring server is implemented to process requests and return TFL data. For this reason, there are two main functions, one for each of the bots – an Alias has been set in the `project.clj` for convenience
-
 ## TFL API
 
 In order to make this bot work it uses the current TFL Unified API. For more information, visit: https://api.tfl.gov.uk/.
