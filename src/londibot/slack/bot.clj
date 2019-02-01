@@ -11,6 +11,7 @@
   (:gen-class))
 
 (defroutes main-routes
+  (GET  "/ping-me" [] "Hello world!") ; This endoint is for pinging Heroku #NoSleepDynos!
   (POST "/tube-status" [] (api/get-status-notification))
   (POST "/schedule" request (api/schedule-notification request))
   (POST "/help"     request (api/help request))
