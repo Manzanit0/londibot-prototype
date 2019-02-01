@@ -23,10 +23,14 @@
   (:params request))
 
 (defn- get-channel-id [request]
-  (get (get-params request) "channel_id"))
+  (-> request
+      (get-params)
+      (get "channel_id")))
 
 (defn- get-text [request]
-  (get (get-params request) "text"))
+  (-> request
+      (get-params)
+      (get "text")))
 
 (defn- async-create-scheduled-status-notification [request]
   (future
