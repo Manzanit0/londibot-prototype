@@ -20,3 +20,6 @@
        "\n - `Every THU at 07:00AM`"
        "\n\n As you can see I understand both 12h and 24h formats, "
        "but I'm still learning how to express weekdays properly..."))
+
+(defn default-help-message []
+  "Try with the topic `schedule`, for example :)")
