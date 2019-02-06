@@ -27,7 +27,7 @@
 
 ; Database model
 (defn new-job [userid cronexpression service]
-   {:userid userid :cronexpression cronexpression :service service})
+  {:userid userid :cronexpression cronexpression :service service})
 
 (defn get-cron-expr [job]
   (:cronexpression job))

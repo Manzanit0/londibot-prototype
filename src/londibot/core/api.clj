@@ -26,9 +26,9 @@
 
 (defn schedule-job [job send-fn]
   (->> job
-      (db/get-cron-expr)
-      (sc/cron)
-      (sc/schedule #(send-status-notification send-fn))))
+       (db/get-cron-expr)
+       (sc/cron)
+       (sc/schedule #(send-status-notification send-fn))))
 
 (defn create-scheduled-status-notification [job send-fn]
   (schedule-job job send-fn)
@@ -46,5 +46,5 @@
 
 (defn help [topic]
   (match topic
-        "schedule" (msg/schedule-help-message)
-        :else (msg/default-help-message)))
+         "schedule" (msg/schedule-help-message)
+         :else (msg/default-help-message)))
