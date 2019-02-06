@@ -29,7 +29,7 @@
    "help"
    (fn
      [{{id :id} :chat}]
-     (send-markdown-message id "Right now the only available command is `/status`.")))
+     (send-markdown-message id (msg/default-help-message))))
 
   (h/command-fn
    "status"
