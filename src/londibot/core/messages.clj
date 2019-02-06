@@ -5,8 +5,10 @@
   (str "*" (:line line-status) "*" ": " (:status line-status)))
 
 (defn tube-status-message [lines-statuses]
-  (str "The current status for London's tube is:\n\n"
-    (string/join "\n" (map pretty-print-line-status lines-statuses))))
+  (->> lines-statuses
+       (map pretty-print-line-status)
+       (string/join "\n")
+       (str "The current status for London's tube is:\n\n")))
 
 (defn scheduled-notification-confirmation [expression]
   (str "I have succesfully scheduled a notification for you under the cron: `" expression "`"))
@@ -20,3 +22,6 @@
        "\n - `Every THU at 07:00AM`"
        "\n\n As you can see I understand both 12h and 24h formats, "
        "but I'm still learning how to express weekdays properly..."))
+
+(defn default-help-message []
+  "Try with the topic `schedule`, for example :)")

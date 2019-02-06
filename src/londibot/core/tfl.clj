@@ -1,16 +1,23 @@
 (ns londibot.core.tfl
   (:require [clj-http.client :as client]
-            [clojure.xml :as xml]
-            [clojure.zip :as zip]))
+            [clojure.xml :as xml]))
 
 (defn- find-tag [tagName, tags]
-  (first (filter (fn [t] (= tagName (:tag t))) tags)))
+  (->> tags
+       (filter (fn [t] (= tagName (:tag t))))
+       (first)))
 
 (defn- get-line [tags]
-  (:Name (:attrs (find-tag :Line tags))))
+  (->> tags
+       (find-tag :Line)
+       (:attrs)
+       (:Name)))
 
 (defn- get-status [tags]
-  (:Description (:attrs (find-tag :Status tags))))
+  (->> tags
+       (find-tag :Status)
+       (:attrs)
+       (:Description)))
 
 (defn- get-line-status [rawStatus]
   (let [tags (:content rawStatus)]
@@ -18,10 +25,19 @@
      :status (get-status tags)}))
 
 (defn- parse-xml [s]
-  (xml/parse (java.io.ByteArrayInputStream. (.getBytes s))))
+  (->> s
+       (.getBytes)
+       (java.io.ByteArrayInputStream.)
+       (xml/parse)))
 
 (defn extract-data [content]
-  (map get-line-status (:content content)))
+  (->> content
+       (:content)
+       (map get-line-status)))
 
 (defn tube-status []
-  (extract-data (parse-xml (:body (client/get "http://cloud.tfl.gov.uk/TrackerNet/LineStatus")))))
+  (-> "http://cloud.tfl.gov.uk/TrackerNet/LineStatus"
+      (client/get)
+      (get :body)
+      (parse-xml)
+      (extract-data)))

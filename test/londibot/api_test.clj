@@ -35,5 +35,5 @@
           job1 (db/create (api/new-job 123 "* * * * * *" service))
           job2 (db/create (api/new-job 456 "* * * * * *" service))]
       (let [results (api/schedule-all-notifications service send-fn schedule-fn)]
-        (is (= (first @results) status-message1))
-        (is (= (second @results) status-message2))))))
+        (is (= (first results) status-message1))
+        (is (= (second results) status-message2))))))

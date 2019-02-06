@@ -4,13 +4,19 @@
   #"^.*Every (?<day>.*?) at (?<hour>.*?)[\.|:](?<minutes>.*?)(?<modifier>h|AM|PM).*$")
 
 (defn- increment-by-12 [hour modifier]
-  (+ hour (if (= modifier "PM") 12 0)))
+  (cond
+    (= modifier "PM") (+ hour 12)
+    :else hour))
 
 (defn- reduce-by-24 [hour]
-  (- hour (if (>= hour 24) 24 0)))
+  (cond 
+    (>= hour 24) (- hour 24)
+    :else hour))
 
 (defn- prepend-zero [hour]
-  (if (= (count hour) 1) (str "0" hour) hour))
+  (cond
+    (= (count hour) 1) (str "0" hour)
+    :else hour))
 
 (defn- to-24-format [hour modifier]
     (-> hour
