@@ -29,6 +29,9 @@
 (defn new-job [userid cronexpression service]
   {:userid userid :cronexpression cronexpression :service service})
 
+(defn get-id [job]
+  (:id job))
+
 (defn get-cron-expr [job]
   (:cronexpression job))
 
