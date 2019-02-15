@@ -1,6 +1,6 @@
 (ns londibot.core.api
   (:require [clojure.core.match :refer [match]]
-            [immutant.scheduling :as sc]
+            [londibot.core.scheduling :as sc]
             [londibot.core.tfl :as tfl]
             [londibot.core.messages :as msg]
             [londibot.core.database :as db]
@@ -25,14 +25,11 @@
       (send-fn)))
 
 (defn schedule-job [job send-fn]
-  (->> job
-       (db/get-cron-expr)
-       (sc/cron)
-       (sc/schedule #(send-status-notification send-fn))))
+  (sc/schedule #(send-status-notification send-fn) job))
 
 (defn create-scheduled-status-notification [job send-fn]
-  (schedule-job job send-fn)
   (db/create job)
+  (schedule-job job send-fn)
   (send-schedule-confirmation job send-fn))
 
 (defn schedule-all-notifications
