@@ -1,5 +1,6 @@
 (ns londibot.core.messages
-  (:require [clojure.string :as string]))
+  (:require [clojure.core.match :refer [match]]
+            [clojure.string :as string]))
 
 (defn pretty-print-line-status [line-status]
   (str "*" (:line line-status) "*" ": " (:status line-status)))
@@ -25,3 +26,9 @@
 
 (defn default-help-message []
   "Try with the topic `schedule`, for example :)")
+
+(defn help [topic]
+  (match topic
+         "schedule" (schedule-help-message)
+         :else (default-help-message)))
+

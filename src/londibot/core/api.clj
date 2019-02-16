@@ -10,11 +10,11 @@
   (let [cron (nl/to-cron expr)]
     (db/new-job id cron service)))
 
-(defn get-status-notification []
+(defn tfl-status-message []
   (-> (tfl/tube-status)
       (msg/tube-status-message)))
 
-(defn send-status-notification [send-fn]
+(defn send-tfl-status-message [send-fn]
   (-> (get-status-notification)
       (send-fn)))
 
@@ -32,9 +32,9 @@
   (schedule-job job send-fn)
   (send-schedule-confirmation job send-fn))
 
-(defn schedule-all-notifications
+(defn schedule-all
   ([service send-fn] ; Default the scheduling library method.
-   (schedule-all-notifications service send-fn schedule-job))
+   (schedule-all service send-fn schedule-job))
 
   ([service send-fn schedule-fn]
    (->> (db/all service)
