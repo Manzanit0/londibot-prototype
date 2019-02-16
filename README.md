@@ -76,6 +76,8 @@ In order to make this bot work it uses the current TFL Unified API. For more inf
 
 5. [The complete guide to Clojure destructuring](http://blog.brunobonacci.com/2014/11/16/clojure-complete-guide-to-destructuring)
 
+6. [How to name Clojure functions](https://stuartsierra.com/2016/01/09/how-to-name-clojure-functions)
+
 ## License
 
 Copyright © 2019 Manzanit0
